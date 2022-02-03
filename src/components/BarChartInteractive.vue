@@ -1,36 +1,13 @@
 <template>
-    <div id="my_dataviz">
-        <div id="tooltip" class="hidden">
-      <p><strong>Important Label Heading</strong></p>
-      <p><span id="value">100</span>%</p>
+  <div id="my_dataviz">
+    <div id="tooltip" class="hidden">
+
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
 const d3 = require("d3");
-
-const mousemove = (event) => {
-  const posX = event.clientX - 400;
-  const posY = event.clientY - 100;
-
-  d3.select('#tooltip')
-    //.style("transform", "translateY(-55%)")
-    .style('left', posX + 'px') // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-    .style('top', posY + 'px');
-};
-
-const mouseleave = () => {
-  d3.select('#tooltip').style('opacity', 0);
-};
-
-const mouseover = (event, d) => {
-  const {count, type} = d.data
-  d3.select('#tooltip')
-    .html(type +" : "+ count)
-    .style('top', d3.pointer(event)[1] + 'px')
-    .style('opacity', 1);
-};
 
 export default {
   mounted: function () {
@@ -83,7 +60,7 @@ export default {
         }),
       ]); // d3.hist has to be called before the Y axis obviously
       svg.append("g").call(d3.axisLeft(y));
-/*
+
       // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
       // Its opacity is set to 0: we don't see it by default.
       const tooltip = d3
@@ -114,7 +91,7 @@ export default {
       const hideTooltip = function () {
         tooltip.transition().duration(100).style("opacity", 0);
       };
-*/
+
       // append the bar rectangles to the svg element
       svg
         .selectAll("rect")
@@ -132,14 +109,9 @@ export default {
         })
         .style("fill", "#69b3a2")
         // Show tooltip on hover
-        .on("mouseover", mouseover)
-        .on("mousemove", mousemove)
-        .on("mouseleave", mouseleave);
-        /*
         .on("mouseover", showTooltip)
         .on("mousemove", moveTooltip)
         .on("mouseleave", hideTooltip);
-        */
     });
   },
 };

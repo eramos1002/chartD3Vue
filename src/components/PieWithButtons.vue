@@ -1,6 +1,15 @@
 <template>
   <div>
-    <button data="data1" v-on:click="update">Update data</button>
+    <select v-model="value">
+      <option disabled value="">Seleccione una medida</option>
+      <option value="total_u">Total Us</option>
+      <option value="used_u">Used Us</option>
+      <option value="free_u">Free Us</option>
+      <option value="total_r">Total racks</option>
+      <option value="used_r">Used racks</option>
+      <option value="free_r">Free racks</option>
+    </select>
+    <span>Seleccionado: {{ value }}</span>
 
     <div id="my_dataviz"></div>
   </div>
@@ -56,10 +65,8 @@
 
     data: function() {
       return {
-        pie: {
-          id: 'name',
-          value: 'used_u'
-        }
+        id: 'name',
+        value: 'used_u'
       };
     },
 
@@ -77,7 +84,7 @@
       // A function that create / update the plot 
       update: function() {
         fetchData()
-        .then(fetchedData => formatData(fetchedData, this.pie.value, this.pie.id))
+        .then(fetchedData => formatData(fetchedData, this.value, this.id))
         .then(data => {
           // Map to data and build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
           this.$svg.selectAll('path')
@@ -95,6 +102,10 @@
             .style("opacity", 1);
         });
       }
+    },
+    watch: {
+      id: 'update',
+      value: 'update'
     }
   };
 

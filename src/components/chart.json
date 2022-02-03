@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "parentid": 1,
+        "name": "SC1-DC",
+        "total_u": 10000,
+        "used_u": 6845,
+        "free_u": 3515,
+        "total_r": 238,
+        "used_r": 162,
+        "free_r": 76
+    },
+    {
+        "id": 2,
+        "parentid": 1,
+        "name": "SC1-ACG1",
+        "total_u": 8000,
+        "used_u": 7500,
+        "free_u": 500,
+        "total_r": 190,
+        "used_r": 178,
+        "free_r": 12
+    },
+    {
+        "id": 3,
+        "parentid": 2,
+        "name": "P2-DC",
+        "total_u": 8500,
+        "used_u": 3000,
+        "free_u": 5500,
+        "total_r": 202,
+        "used_r": 71,
+        "free_r": 131
+    }
+]

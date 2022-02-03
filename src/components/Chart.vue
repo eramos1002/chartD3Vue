@@ -1,51 +1,21 @@
 <template>
-  <div id="chart"></div>
+  <div>
+    <button v-on:click="generateChart">Generate chart</button>
+
+    <div id="chart"></div>
+  </div>
 </template>
 
 <script>
-const d3 = require("d3");
+  const d3 = require("d3");
+  const remoteData = require('./chart.json');
+  const fetchData = () => new Promise(resolve => resolve(remoteData));
 
-export default {
-  mounted: function () {
-    var margin = { top: 20, right: 30, bottom: 40, left: 90 },
-      width = 460 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+  const margin = { top: 20, right: 30, bottom: 40, left: 90 };
+  const width = 460 - margin.left - margin.right;
+  const height = 400 - margin.top - margin.bottom;
 
-    var data = [      
-        {
-            "id": 1,
-            "parentid": 1,
-            "name": "SC1-DC",
-            "total_u": 10000,
-            "used_u": 6845,
-            "free_u": 3515,
-            "total_r": 238,
-            "used_r": 162,
-            "free_r": 76
-        },
-        {
-            "id": 2,
-            "parentid": 1,
-            "name": "SC1-ACG1",
-            "total_u": 8000,
-            "used_u": 7500,
-            "free_u": 500,
-            "total_r": 190,
-            "used_r": 178,
-            "free_r": 12
-        },
-        {
-            "id": 3,
-            "parentid": 2,
-            "name": "P2-DC",
-            "total_u": 8500,
-            "used_u": 3000,
-            "free_u": 5500,
-            "total_r": 202,
-            "used_r": 71,
-            "free_r": 131
-        }
-    ];
+  const generateChart = function (data) {
     // append the svg object to the body of the page
     var svg = d3
       .select("#chart")
@@ -56,7 +26,6 @@ export default {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Parse the Data
-
     var x = d3.scaleLinear().domain([0, 12000]).range([0, width]);
     svg
       .append("g")
@@ -93,6 +62,15 @@ export default {
       })
       .attr("height", y.bandwidth())
       .attr("fill", "red");
-  },
-};
+  }
+
+  export default {
+    methods: {
+      generateChart: function() {
+        fetchData()
+        .then(generateChart)
+        .catch(console.error);
+      }
+    }
+  };
 </script>
